@@ -1,0 +1,14 @@
+{
+  "crypto": {
+        "route": "../routes/crypto.routes"
+  },
+  "notes": {
+    "route": "../routes/knocknotes.routes"
+  },
+
+  "addons": {
+        "route": "../routes/addons.routes"
+  }
+
+
+}

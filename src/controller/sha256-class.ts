@@ -1,0 +1,24 @@
+import crypto, { BinaryToTextEncoding } from 'crypto'
+//modulo de encryptacion SHA256  ~_~ 
+class SHA256 {
+    private plainText: any
+    private digest: BinaryToTextEncoding
+    public constructor(text:string, digest:BinaryToTextEncoding = 'hex') {
+        this.plainText = text
+        this.digest = digest
+    } 
+    public convert():string {
+        const hash = crypto.createHash('sha256').update(this.plainText).digest(this.verify())
+        return hash as string
+    }
+    private verify():BinaryToTextEncoding {
+        if(this.digest === 'hex' || this.digest === 'base64') {
+            return this.digest
+        } else{
+           return 'hex'
+        }
+    }
+};
+
+export {SHA256}
+
