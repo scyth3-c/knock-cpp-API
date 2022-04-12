@@ -12,7 +12,7 @@
 - [scyth3-c/knock-cpp-online](https://github.com/scyth3-c/knock-cpp-online) <br>
 - [scyth3-c/Vue-Electron-Port](https://github.com/scyth3-c/Vue-Electron-Port) <br/>
  
- test api: 
+ Test API: 
   - [HEROKU](https://radiant-dusk-88409.herokuapp.com/) <br>
   - the API is host in a free service because the API has a time delay in activating
  
