@@ -7,7 +7,7 @@
  
  ## COSENO SCYTHE API 
  
- _an API that serves to compile or generate assembly code on the web, as well as manage notes, this API is the engine of the projects:_
+ _an API that serves to compile c++ or generate assembly code on the web, as well as manage notes, this API is the engine of the projects:_
  
 - [scyth3-c/knock-cpp-online](https://github.com/scyth3-c/knock-cpp-online) <br>
 - [scyth3-c/Vue-Electron-Port](https://github.com/scyth3-c/Vue-Electron-Port) <br/>
