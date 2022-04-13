@@ -5,7 +5,7 @@
    <img src="https://img.shields.io/static/v1?label=CONTRIBUTIONS&message=ALL WELCOME&color=green"> 
  </div>
  
- ## COSENO API 
+ ## COSENO SCYTHE API 
  
  _an API that serves to compile or generate assembly code on the web, as well as manage notes, this API is the engine of the projects:_
  
