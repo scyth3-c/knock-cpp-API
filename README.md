@@ -135,5 +135,16 @@
  
  
  
-      
-     
+## Posibles Features
+
+- include the rwnio api for htpp request, multi-platform
+- http get 
+- http post
+- x-www-form-urlencoded
+- realtime
+- based in curl with a friendly interface
+ 
+ By Scyth3-c
+
+
+
