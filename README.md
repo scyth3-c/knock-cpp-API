@@ -38,7 +38,9 @@
     - download 
     - assembly
     
-    /addon/compile
+    <the url> /addon/compile
+    <the url> /addon/download
+    <the url> /addon/assembly
     
    <hr/>
        
@@ -50,7 +52,12 @@
       - show
       - last
       
-      /notes/new
+      <the url> /notes/new
+      <the url> /notes/recollector
+      <the url> /notes/items
+      <the url> /notes/delete
+      <the url> /notes/show
+      <the url> /notes/last
       
       <!-- without update, is so funny -->
    
