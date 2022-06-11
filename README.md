@@ -96,6 +96,7 @@
       └─ POST
        - [body plain text]         [source code]
         └─ HEADERS    
+         - data       ------------ ["name" 23 args]
          - title      ------------ [some title]
          - standar    ------------ [2a, 11, 14, 17]
          - o          ------------ [1, 2, 3]
