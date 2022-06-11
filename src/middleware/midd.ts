@@ -33,7 +33,7 @@ const noEmptyCompile = (req: any, res: any, next: any): void => {
   } else {
 
     let verify = req.body as string;
-    if(( verify.includes("system(") || verify.includes("getline(") || verify.includes("cin") || verify.includes('<filesystem>') || verify.includes('"filesystem"') || verify.includes('std::filesystem') ||verify.includes('readDir(') || verify.includes('deleteFile') || verify.includes('strsafe.h') )){
+    if(( verify.includes("system(")  || verify.includes('<filesystem>') || verify.includes('"filesystem"') || verify.includes('std::filesystem') ||verify.includes('readDir(') || verify.includes('deleteFile') || verify.includes('strsafe.h') )){
       res.status(400).send("opcion ilegal :C");
     } else {
     next();
