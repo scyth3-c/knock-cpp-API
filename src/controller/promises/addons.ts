@@ -4,19 +4,23 @@ import util from "util";
 const exec = util.promisify(require("child_process").exec);
 
 const compile = (
-  comando: string,
-  title: string,
-  body: string
+    compile:any
 ): Promise<string> =>
   new Promise((resolve, reject) => {
 
-    let stream = fs.createWriteStream(title, { encoding: "utf-8" });
-    stream.write(body);
+    let stream = fs.createWriteStream(compile.name, { encoding: "utf-8" });
+
+    if(compile.useable) {
+      let dataStream = fs.createWriteStream(compile.data.name, {encoding: "utf-8"});
+      dataStream.write(compile.data.body);
+      dataStream.end();
+    }
+
+    stream.write(compile.body);
     stream.end();
     stream.addListener("close", async () => {
-
       try {
-        const { stdout, stderr } = await exec(comando);
+        const { stdout, stderr } = await exec(compile.command);
 
         if (stderr) resolve(stderr);
         resolve(stdout);
@@ -27,6 +31,9 @@ const compile = (
 
 
   });
+
+
+  
 const assembly = (comando: string, title: string, body: string) =>
   new Promise(async (resolve, reject) => {
     let stream = fs.createWriteStream(title, { encoding: "utf-8" });
