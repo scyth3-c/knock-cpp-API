@@ -4,44 +4,67 @@ const exec = util.promisify(require("child_process").exec);
 
 import * as promise from "./promises/addons";
 
+interface commandeable {
+  body:string,
+  command: string,
+  name:string
+  useable:boolean,
+  data: DataQuery
+};
+
+interface DataQuery {
+  body:string,
+  name:string,
+};
+
+interface otherHeaders {
+    title:string,
+    standar:string,
+    O: string,
+    flags:string
+};
+
+
 const _default = (req: any, res: any) => {
   res.json({ ruta: "/addons", info: "knock-api " });
 };
 
 const _compile = async (req: any, res: any, next: any) => {
-  let title: string;
-  let standar: string;
-  let o: string;
-  let flags:string;
 
-  if (req.headers["title"] === undefined) {
-    let auc: number = Math.floor(Math.random() * (89894 - 10)) + 10;
-    title = auc.toString();
-  } else {
-    title = req.headers["title"];
-  }
-  if (req.headers["standar"] === undefined) {
-    standar = "c++17";
-  } else standar = req.headers["standar"];
 
-  if (req.headers["o"] === undefined) {
-    o = "1";
-  } else {
-    o = req.headers["o"];
-  }
-  if(req.headers["flags"]) {
-    flags = req.headers["flags"];
-  } else {
-    flags = "";
-  }
-  let command: string = `g++ -std=${standar} ${flags} ${process.cwd()}/src/c++/temp/${title}.cpp -O${o} -o ${process.cwd()}/src/c++/temp/${title}  &&  ${process.cwd()}/src/c++/temp/./${title}`;
+  let headers:otherHeaders = {
+    title: req.headers["title"] || (Math.floor(Math.random() * (89894 - 10)) + 10).toString(),
+    standar: req.headers["standar"] || "c++17",
+    O: req.headers["o"] || "1",
+    flags: req.headers["flags"] || ""
+  };
 
+
+    let flag_data:string = req.headers["data"];
+    let command_data:string = `g++ -std=${headers.standar} ${headers.flags} ${process.cwd()}/src/c++/temp/${headers.title}.cpp -O${headers.O} -o ${process.cwd()}/src/c++/temp/${headers.title}  &&  ${process.cwd()}/src/c++/temp/./${headers.title} < ${process.cwd()}/src/c++/temp/${headers.title}.txt`;
+    let command_raw:string = `g++ -std=${headers.standar} ${headers.flags} ${process.cwd()}/src/c++/temp/${headers.title}.cpp -O${headers.O} -o ${process.cwd()}/src/c++/temp/${headers.title}  &&  ${process.cwd()}/src/c++/temp/./${headers.title}`;
+
+
+    let compile:commandeable = {
+        body: req.body,
+        command: flag_data === undefined ? command_raw : command_data,
+        name: `${process.cwd()}/src/c++/temp/${headers.title}.cpp`,
+        useable: flag_data === undefined ? false : true,
+        data: {
+          body: flag_data,
+          name: `${process.cwd()}/src/c++/temp/${headers.title}.txt`
+        }
+    };
+
+  
   await promise.default
-    .compile(command, `${process.cwd()}/src/c++/temp/${title}.cpp`, req.body)
+    .compile(compile)
     .then((result) => {
-      fs.unlink(`${process.cwd()}/src/c++/temp/${title}.cpp`, (err)=>{ if(err) console.log(err);
+      fs.unlink(`${process.cwd()}/src/c++/temp/${headers.title}.cpp`, (err)=>{ if(err) console.log(err);
        });
-      fs.unlink(`${process.cwd()}/src/c++/temp/${title}`,  (err)=>{ if(err) console.log(err);
+      fs.unlink(`${process.cwd()}/src/c++/temp/${headers.title}`,  (err)=>{ if(err) console.log(err);
+      });
+      fs.unlink(`${process.cwd()}/src/c++/temp/${headers.title}.txt`,  (err)=>{ if(err) console.log(err);
       });
       res.send(result);
     })
@@ -50,7 +73,10 @@ const _compile = async (req: any, res: any, next: any) => {
     });
 };
 
+
+
 const _download = (req: any, res: any, next: any) => {
+
   let title: string;
   if (req.headers["title"] === undefined) {
     let auc: number = Math.floor(Math.random() * (89894 - 10)) + 10;
@@ -71,35 +97,24 @@ const _download = (req: any, res: any, next: any) => {
 };
 
 const _asm = async (req: any, res: any, next: any) => {
-  let title: string;
-  let standar: string;
-  let o: string;
+ 
+  let headers:otherHeaders = {
+    title: req.headers["title"] || (Math.floor(Math.random() * (89894 - 10)) + 10).toString(),
+    standar: req.headers["standar"] || "c++17",
+    O: req.headers["o"] || "1",
+    flags: req.headers["flags"] || ""
+  };
 
-  if (req.headers["title"] === undefined) {
-    let auc: number = Math.floor(Math.random() * (89894 - 10)) + 10;
-    title = auc.toString();
-  } else {
-    title = req.headers["title"];
-  }
-  if (req.headers["standar"] === undefined) {
-    standar = "c++17";
-  } else standar = req.headers["standar"];
-
-  if (req.headers["o"] === undefined) {
-    o = "1";
-  } else {
-    o = req.headers["o"];
-  }
-  let command: string = `g++ -S -std=${standar} ${process.cwd()}/src/c++/temp/${title}_assembly.cpp -O${o} -o ${process.cwd()}/src/c++/temp/${title}_assembly`;
+  let command: string = `g++ -S -std=${headers.standar} ${process.cwd()}/src/c++/temp/${headers.title}_assembly.cpp -O${headers.O} -o ${process.cwd()}/src/c++/temp/${headers.title}_assembly`;
   await promise.default
     .assembly(
       command,
-      `${process.cwd()}/src/c++/temp/${title}_assembly.cpp`,
+      `${process.cwd()}/src/c++/temp/${headers.title}_assembly.cpp`,
       req.body
     )
     .then((result: any) => {
       if (result.includes("true")) {
-        res.download(`${process.cwd()}/src/c++/temp/${title}_assembly`);
+        res.download(`${process.cwd()}/src/c++/temp/${headers.title}_assembly`);
       } else {
         res.send(result);
       }
