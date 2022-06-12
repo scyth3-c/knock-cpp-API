@@ -21,9 +21,15 @@ const compile = (
     stream.addListener("close", async () => {
       try {
         const { stdout, stderr } = await exec(compile.command);
-
         if (stderr) resolve(stderr);
+
+        if(compile.bot) {
+          let array = stdout.split('\r\n');
+          resolve(array);
+        } else {
         resolve(stdout);
+        }
+
       } catch (error: any) {
         resolve(error.stderr);
       }
