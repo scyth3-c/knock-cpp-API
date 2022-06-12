@@ -159,7 +159,7 @@
  
  
  
-## Posibles Features
+## Posibles features support C++ 
 
 - include the rwnio api for htpp request, multi-platform
 - http get 
