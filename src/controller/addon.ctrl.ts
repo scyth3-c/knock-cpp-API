@@ -9,7 +9,8 @@ interface commandeable {
   command: string,
   name:string
   useable:boolean,
-  data: DataQuery
+  bot: boolean,
+  data: DataQuery,
 };
 
 interface DataQuery {
@@ -22,6 +23,7 @@ interface otherHeaders {
     standar:string,
     O: string,
     flags:string
+    bot: boolean
 };
 
 
@@ -36,7 +38,8 @@ const _compile = async (req: any, res: any, next: any) => {
     title: req.headers["title"] || (Math.floor(Math.random() * (89894 - 10)) + 10).toString(),
     standar: req.headers["standar"] || "c++17",
     O: req.headers["o"] || "1",
-    flags: req.headers["flags"] || ""
+    flags: req.headers["flags"] || "",
+    bot: req.headers["bot"] ? true : false
   };
 
 
@@ -50,6 +53,7 @@ const _compile = async (req: any, res: any, next: any) => {
         command: flag_data === undefined ? command_raw : command_data,
         name: `${process.cwd()}/src/c++/temp/${headers.title}.cpp`,
         useable: flag_data === undefined ? false : true,
+        bot: headers.bot,
         data: {
           body: flag_data,
           name: `${process.cwd()}/src/c++/temp/${headers.title}.txt`
@@ -102,7 +106,8 @@ const _asm = async (req: any, res: any, next: any) => {
     title: req.headers["title"] || (Math.floor(Math.random() * (89894 - 10)) + 10).toString(),
     standar: req.headers["standar"] || "c++17",
     O: req.headers["o"] || "1",
-    flags: req.headers["flags"] || ""
+    flags: req.headers["flags"] || "",
+    bot: false
   };
 
   let command: string = `g++ -S -std=${headers.standar} ${process.cwd()}/src/c++/temp/${headers.title}_assembly.cpp -O${headers.O} -o ${process.cwd()}/src/c++/temp/${headers.title}_assembly`;
@@ -124,4 +129,6 @@ const _asm = async (req: any, res: any, next: any) => {
     });
 };
 
-export { _compile, _default, _download, _asm };
+
+
+export { _compile, _default, _download, _asm};
