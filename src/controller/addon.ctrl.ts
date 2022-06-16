@@ -28,7 +28,7 @@ interface otherHeaders {
 
 
 const _default = (req: any, res: any) => {
-  res.json({ ruta: "/addons", info: "knock-api " });
+  res.json({ ruta: "/addons", endpoints: ['/assembly', '/download', '/compile'], info: "knock-api " });
 };
 
 
