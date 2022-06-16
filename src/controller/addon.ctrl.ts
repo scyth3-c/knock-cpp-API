@@ -1,6 +1,5 @@
-import fs, { WriteStream } from "fs";
-import util from "util";
-const exec = util.promisify(require("child_process").exec);
+import fs from "fs";
+
 
 import * as promise from "./promises/addons";
 
@@ -9,8 +8,7 @@ interface commandeable {
   command: string,
   name:string
   useable:boolean,
-  bot: boolean,
-  data: DataQuery,
+  data: DataQuery
 };
 
 interface DataQuery {
@@ -18,12 +16,14 @@ interface DataQuery {
   name:string,
 };
 
+
+/* An interface that is used to create a type for the headers object. */
 interface otherHeaders {
     title:string,
     standar:string,
     O: string,
-    flags:string
-    bot: boolean
+    flags:string,
+    header_files: string,
 };
 
 
@@ -31,6 +31,15 @@ const _default = (req: any, res: any) => {
   res.json({ ruta: "/addons", info: "knock-api " });
 };
 
+
+
+/**
+ * It takes the request body, and compiles it into a c++ file, then it runs the file and returns the
+ * result.
+ * @param {any} req - any, res: any, next: any
+ * @param {any} res - the response object
+ * @param {any} next - is a function that is called when the middleware is done.
+ */
 const _compile = async (req: any, res: any, next: any) => {
 
 
@@ -39,7 +48,7 @@ const _compile = async (req: any, res: any, next: any) => {
     standar: req.headers["standar"] || "c++17",
     O: req.headers["o"] || "1",
     flags: req.headers["flags"] || "",
-    bot: req.headers["bot"] ? true : false
+    header_files: req.headers["header_files"] || ""
   };
 
 
@@ -53,11 +62,10 @@ const _compile = async (req: any, res: any, next: any) => {
         command: flag_data === undefined ? command_raw : command_data,
         name: `${process.cwd()}/src/c++/temp/${headers.title}.cpp`,
         useable: flag_data === undefined ? false : true,
-        bot: headers.bot,
         data: {
           body: flag_data,
           name: `${process.cwd()}/src/c++/temp/${headers.title}.txt`
-        }
+        },
     };
 
   
@@ -79,6 +87,13 @@ const _compile = async (req: any, res: any, next: any) => {
 
 
 
+
+/**
+ * It downloads a file from the server to the client.
+ * @param {any} req - any, res: any, next: any
+ * @param {any} res - any =&gt; the response object
+ * @param {any} next - any =&gt; next()
+ */
 const _download = (req: any, res: any, next: any) => {
 
   let title: string;
@@ -100,6 +115,18 @@ const _download = (req: any, res: any, next: any) => {
     });
 };
 
+
+
+/**
+ * _asm is a function that takes in a request, response, and next function as parameters. It then
+ * creates a headers object that contains the headers of the request. It then creates a command string
+ * that is used to compile the code. It then uses the promise.default.assembly function to compile the
+ * code. If the promise is resolved, it will either send the result or download the file. If the
+ * promise is rejected, it will send an error message.
+ * @param {any} req - any, res: any, next: any
+ * @param {any} res - response
+ * @param {any} next - is the next function in the middleware chain
+ */
 const _asm = async (req: any, res: any, next: any) => {
  
   let headers:otherHeaders = {
@@ -107,7 +134,7 @@ const _asm = async (req: any, res: any, next: any) => {
     standar: req.headers["standar"] || "c++17",
     O: req.headers["o"] || "1",
     flags: req.headers["flags"] || "",
-    bot: false
+    header_files: req.headers["header_files"] || ""
   };
 
   let command: string = `g++ -S -std=${headers.standar} ${process.cwd()}/src/c++/temp/${headers.title}_assembly.cpp -O${headers.O} -o ${process.cwd()}/src/c++/temp/${headers.title}_assembly`;
@@ -129,6 +156,4 @@ const _asm = async (req: any, res: any, next: any) => {
     });
 };
 
-
-
-export { _compile, _default, _download, _asm};
+export { _compile, _default, _download, _asm };
