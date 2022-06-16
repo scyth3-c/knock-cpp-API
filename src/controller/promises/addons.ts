@@ -3,8 +3,14 @@ import util from "util";
 
 const exec = util.promisify(require("child_process").exec);
 
+/**
+ * It takes a compile object, creates a write stream, writes the body of the compile object to the
+ * stream, and then executes the command
+ * @param {any} compile - {
+ */
+
 const compile = (
-    compile:any
+    compile:any,
 ): Promise<string> =>
   new Promise((resolve, reject) => {
 
@@ -21,24 +27,23 @@ const compile = (
     stream.addListener("close", async () => {
       try {
         const { stdout, stderr } = await exec(compile.command);
+
         if (stderr) resolve(stderr);
-
-        if(compile.bot) {
-          let array = stdout.split('\r\n');
-          resolve(array);
-        } else {
         resolve(stdout);
-        }
-
       } catch (error: any) {
         resolve(error.stderr);
       }
     });
-
-
   });
 
 
+/**
+ * It takes a command, a title, and a body, and returns a promise that resolves to true if the command
+ * is successful, and rejects with an error if the command is unsuccessful.
+ * @param {string} comando - string - The command to be executed
+ * @param {string} title - The name of the file to be created.
+ * @param {string} body - the body of the file
+ */
   
 const assembly = (comando: string, title: string, body: string) =>
   new Promise(async (resolve, reject) => {
@@ -56,6 +61,13 @@ const assembly = (comando: string, title: string, body: string) =>
     });
   });
 
+
+
+/**
+ * It creates a file with the name of the title parameter and writes the body parameter to it.
+ * @param {string} title - The title of the file you want to download.
+ * @param {string} body - The body of the file you want to download.
+ */
 const download = (title: string, body: string) =>
   new Promise((resolve, reject) => {
     let stream = fs.createWriteStream(title, { encoding: "utf-8" });
