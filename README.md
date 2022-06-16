@@ -13,6 +13,8 @@
  
 - [scyth3-c/knock-cpp-online](https://github.com/scyth3-c/knock-cpp-online) <br>
 - [scyth3-c/Vue-Electron-Port](https://github.com/scyth3-c/Vue-Electron-Port) <br/>
+
+- in a bot discord [scythers-bot](https://github.com/scyth3-c/scythers-bot)
 - in coming ( easyRasp to generate bin files with config GPIO in C++ in _raspberry PI_ )
  
  Test API: 
@@ -156,6 +158,58 @@
           └─ GET
             - plain     ---------- [ "SOME TEXT" ]
             - dg        --------------["hex", "base64"]
+ 
+ 
+ ## more and examples
+ 
+ ### example to compile
+
+``` javascript
+
+
+      await axios.post(`${API}addon/compile`, source_code, {
+        headers: {
+          "Content-Type": "text/plain",
+          title: 'mi_file',
+          standar: "c++17",
+          o: "1",
+          flags: "-Wall",
+          data: "10 kevin",
+        },
+      });
+
+
+```
+ <hr/>
+
+### example to get .asm
+
+ ``` javascript
+
+      await axios
+        .post(`${API}addon/assembly`, source_code, {
+          headers: {
+            "Content-Type": "text/plain",
+            title: 'file_name_opcional',
+            standar: "c++17",
+            o: "1",
+          },
+        })
+        .then(async (result) => {
+          const url = window.URL.createObjectURL(new Blob([result.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "assembly.asm");
+          link.click();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+ 
+ ```
+ 
+ 
+ 
  
  
  
