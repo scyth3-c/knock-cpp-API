@@ -21,6 +21,9 @@
   - [HEROKU](https://radiant-dusk-88409.herokuapp.com/) <br>
   - the API is host in a free service because the API has a time delay in activating
  
+ **important**
+  - if you want use the notes modules,you need a .env file with DB=<mongo_uri> 
+  - the import of the database on the server is usually commented out for that
  
  
  <hr/>
