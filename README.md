@@ -171,7 +171,7 @@
         headers: {
           "Content-Type": "text/plain",
           title: 'mi_file',
-          standar: "c++17",
+          standar: "17",
           o: "1",
           flags: "-Wall",
           data: "10 kevin",
@@ -191,7 +191,7 @@
           headers: {
             "Content-Type": "text/plain",
             title: 'file_name_opcional',
-            standar: "c++17",
+            standar: "17",
             o: "1",
           },
         })
