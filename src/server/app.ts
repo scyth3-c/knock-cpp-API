@@ -1,5 +1,5 @@
 import express from "express";
-//import db from "../connection/database";
+import db from "../connection/database";
 const app = express();
 import os from "os";
 import cors from 'cors'
@@ -7,7 +7,7 @@ import cors from 'cors'
 import * as routes from "./routes.json";
 //load database
 
-// if (db) console.log('-> Conectado con el cluster "ABIS" database ');
+ if (db) console.log('-> Conectado con el cluster "ABIS" database ');
 
 app.use(cors());
 app.use(express.json());
