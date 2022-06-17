@@ -100,7 +100,7 @@
         └─ HEADERS    
          - data       ------------ ["name" 23 args]
          - title      ------------ [some title]
-         - standar    ------------ [2a, 11, 14, 17]
+         - standar    ------------ [c2a, c++11, c++14, c++17]
          - o          ------------ [1, 2, 3]
          - flags      ------------ [-wall Etc.]
    
@@ -171,7 +171,7 @@
         headers: {
           "Content-Type": "text/plain",
           title: 'mi_file',
-          standar: "17",
+          standar: "c++17",
           o: "1",
           flags: "-Wall",
           data: "10 kevin",
@@ -191,7 +191,7 @@
           headers: {
             "Content-Type": "text/plain",
             title: 'file_name_opcional',
-            standar: "17",
+            standar: "c++17",
             o: "1",
           },
         })
