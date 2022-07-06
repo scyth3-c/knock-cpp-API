@@ -8,7 +8,8 @@ interface commandeable {
   command: string,
   name:string
   useable:boolean,
-  data: DataQuery
+  bot: boolean,
+  data: DataQuery,
 };
 
 interface DataQuery {
@@ -22,8 +23,8 @@ interface otherHeaders {
     title:string,
     standar:string,
     O: string,
-    flags:string,
-    header_files: string,
+    flags:string
+    bot: boolean
 };
 
 
@@ -48,7 +49,7 @@ const _compile = async (req: any, res: any, next: any) => {
     standar: req.headers["standar"] || "c++17",
     O: req.headers["o"] || "1",
     flags: req.headers["flags"] || "",
-    header_files: req.headers["header_files"] || ""
+    bot: req.headers["bot"] ? true : false
   };
 
 
@@ -62,6 +63,7 @@ const _compile = async (req: any, res: any, next: any) => {
         command: flag_data === undefined ? command_raw : command_data,
         name: `${process.cwd()}/src/c++/temp/${headers.title}.cpp`,
         useable: flag_data === undefined ? false : true,
+        bot: headers.bot,
         data: {
           body: flag_data,
           name: `${process.cwd()}/src/c++/temp/${headers.title}.txt`
@@ -134,7 +136,7 @@ const _asm = async (req: any, res: any, next: any) => {
     standar: req.headers["standar"] || "c++17",
     O: req.headers["o"] || "1",
     flags: req.headers["flags"] || "",
-    header_files: req.headers["header_files"] || ""
+    bot: false
   };
 
   let command: string = `g++ -S -std=${headers.standar} ${process.cwd()}/src/c++/temp/${headers.title}_assembly.cpp -O${headers.O} -o ${process.cwd()}/src/c++/temp/${headers.title}_assembly`;
@@ -156,4 +158,6 @@ const _asm = async (req: any, res: any, next: any) => {
     });
 };
 
-export { _compile, _default, _download, _asm };
+
+
+export { _compile, _default, _download, _asm};
