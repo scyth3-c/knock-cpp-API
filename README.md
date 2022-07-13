@@ -211,6 +211,32 @@
  
  ```
  
+ ### example with scyth3-3/curl-http-wrappper
+ 
+  [c++]
+ ```c++
+     
+     Veridic tasty;
+     tasty.setUrl("https://API_URL");
+     
+     GET get_data = {
+       "id: example_note_id"
+     };
+     
+     string res = tasty.get(get_data, "/notes/show");
+     //output: json with the note
+     
+     POST my_fields = {
+      "nombre=my note",
+      "conten=this is my note",
+      "autor=kevin"
+      };
+      
+      string res = tasty.post(my_fields, "/notes/new"); 
+      //output: todo ok
+     
+ 
+ ```
  
  
  
