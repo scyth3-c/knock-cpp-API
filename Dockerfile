@@ -6,6 +6,7 @@ RUN npm ci
 RUN apt-get install g++ -y
 COPY . .
 RUN npm run build
+RUN make install
 RUN chmod -R 733 ./src/c++
 RUN adduser tasty 
 USER tasty

@@ -9,33 +9,51 @@ const exec = util.promisify(require("child_process").exec);
  * @param {any} compile - {
  */
 
-const compile = (
-    compile:any,
-): Promise<string> =>
+const compile = (compile: any): Promise<string> =>
   new Promise((resolve, reject) => {
-
+    if (compile.addons.curl) {
+      compile.name = `${process.cwd()}/src/c++/addons/sources/${
+        compile.optional.data
+      }_main/${compile.optional.data}.cpp`;
+      fs.mkdirSync(
+        `${process.cwd()}/src/c++/addons/sources/${compile.optional.data}_main`
+      );
+    }
     let stream = fs.createWriteStream(compile.name, { encoding: "utf-8" });
 
-    if(compile.useable) {
-      let dataStream = fs.createWriteStream(compile.data.name, {encoding: "utf-8"});
+    if (compile.useable) {
+      let dataStream = fs.createWriteStream(compile.data.name, {
+        encoding: "utf-8",
+      });
       dataStream.write(compile.data.body);
       dataStream.end();
     }
-
+    //if(compile.addons.curl) stream.write('#include "veridic.hpp"');
     stream.write(compile.body);
     stream.end();
     stream.addListener("close", async () => {
       try {
-        const { stdout, stderr } = await exec(compile.command);
-
+        let build_and_extract = compile.addons.curl
+          ? compile.command + " && " + compile.optional.extract
+          : compile.command;
+        const { stdout, stderr } = await exec(build_and_extract);
         if (stderr) resolve(stderr);
-        resolve(stdout);
+
+        if (compile.bot) {
+          let array = stdout.split("\r\n");
+          if (compile.addons.curl)
+            exec(`make clean title=${compile.optional.data}`);
+          resolve(array);
+        } else {
+          if (compile.addons.curl)
+            exec(`make clean title=${compile.optional.data}`);
+          resolve(stdout);
+        }
       } catch (error: any) {
         resolve(error.stderr);
       }
     });
   });
-
 
 /**
  * It takes a command, a title, and a body, and returns a promise that resolves to true if the command
@@ -44,7 +62,7 @@ const compile = (
  * @param {string} title - The name of the file to be created.
  * @param {string} body - the body of the file
  */
-  
+
 const assembly = (comando: string, title: string, body: string) =>
   new Promise(async (resolve, reject) => {
     let stream = fs.createWriteStream(title, { encoding: "utf-8" });
@@ -60,8 +78,6 @@ const assembly = (comando: string, title: string, body: string) =>
       }
     });
   });
-
-
 
 /**
  * It creates a file with the name of the title parameter and writes the body parameter to it.
