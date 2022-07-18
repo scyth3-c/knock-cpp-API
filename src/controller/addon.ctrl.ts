@@ -8,8 +8,15 @@ interface commandeable {
   command: string,
   name:string
   useable:boolean,
+  addons: {
+    curl: boolean
+  }
   bot: boolean,
   data: DataQuery,
+  optional: {
+     extract: string,
+     data: string
+  }
 };
 
 interface DataQuery {
@@ -23,10 +30,9 @@ interface otherHeaders {
     title:string,
     standar:string,
     O: string,
-    flags:string
+    flags:string,
     bot: boolean
 };
-
 
 const _default = (req: any, res: any) => {
   res.json({ ruta: "/addons", endpoints: ['/assembly', '/download', '/compile'], info: "knock-api " });
@@ -54,19 +60,47 @@ const _compile = async (req: any, res: any, next: any) => {
 
 
     let flag_data:string = req.headers["data"];
+    let curl:string = req.headers["curl"];
+
     let command_data:string = `g++ -std=${headers.standar} ${headers.flags} ${process.cwd()}/src/c++/temp/${headers.title}.cpp -O${headers.O} -o ${process.cwd()}/src/c++/temp/${headers.title}  &&  ${process.cwd()}/src/c++/temp/./${headers.title} < ${process.cwd()}/src/c++/temp/${headers.title}.txt`;
     let command_raw:string = `g++ -std=${headers.standar} ${headers.flags} ${process.cwd()}/src/c++/temp/${headers.title}.cpp -O${headers.O} -o ${process.cwd()}/src/c++/temp/${headers.title}  &&  ${process.cwd()}/src/c++/temp/./${headers.title}`;
+    let command_make:string = `make title=${headers.title}  standar=${headers.standar}`;
+    let command_make_data:string = `make title=${headers.title} standar=${headers.standar} data=1`;
 
+    const _getCommand = () => {
+      if(flag_data === undefined && curl != "on") return command_raw;
+      else if(flag_data === undefined && curl == "on") return command_make;
+      else if(flag_data != undefined && curl != "on") return command_data;
+      else if(flag_data != undefined && curl == "on") return command_make_data; 
+      else {
+        return command_raw;
+      }
+    };  
+
+    const _getOpt = () => {
+      if(flag_data) {
+        return `${process.cwd()}/src/c++/temp/${headers.title}_bin/./${headers.title} < ${process.cwd()}/src/c++/temp/${headers.title}.txt`;
+      } else{
+        return `${process.cwd()}/src/c++/temp/${headers.title}_bin/./${headers.title}`;
+      }
+    };
 
     let compile:commandeable = {
         body: req.body,
-        command: flag_data === undefined ? command_raw : command_data,
+        command: _getCommand(),
         name: `${process.cwd()}/src/c++/temp/${headers.title}.cpp`,
         useable: flag_data === undefined ? false : true,
+        addons: {
+          curl: curl != "on" ? false : true
+        },
         bot: headers.bot,
         data: {
           body: flag_data,
           name: `${process.cwd()}/src/c++/temp/${headers.title}.txt`
+        },
+        optional: {
+          extract: _getOpt(),
+          data: headers.title
         },
     };
 
@@ -74,12 +108,17 @@ const _compile = async (req: any, res: any, next: any) => {
   await promise.default
     .compile(compile)
     .then((result) => {
-      fs.unlink(`${process.cwd()}/src/c++/temp/${headers.title}.cpp`, (err)=>{ if(err) console.log(err);
+
+      if(!compile.addons.curl){
+        fs.unlink(`${process.cwd()}/src/c++/temp/${headers.title}.cpp`, (err)=>{ if(err) console.log(err);
+        });
+       fs.unlink(`${process.cwd()}/src/c++/temp/${headers.title}`,  (err)=>{ if(err) console.log(err);
        });
-      fs.unlink(`${process.cwd()}/src/c++/temp/${headers.title}`,  (err)=>{ if(err) console.log(err);
-      });
-      fs.unlink(`${process.cwd()}/src/c++/temp/${headers.title}.txt`,  (err)=>{ if(err) console.log(err);
-      });
+      } else{
+        fs.unlink(`${process.cwd()}/src/c++/addons/sources/${headers.title}_main/${headers.title}.cpp`,  (err)=>{ if(err) console.log(err);});
+        fs.rmdir(`${process.cwd()}/src/c++/addons/sources/${headers.title}_main`,  (err)=>{ if(err) console.log(err);});
+      }
+      if(fs.existsSync( `${process.cwd()}/src/c++/temp/${headers.title}.txt`))   fs.unlink(`${process.cwd()}/src/c++/temp/${headers.title}.txt`, (err)=>{ if(err) console.log(err);});
       res.send(result);
     })
     .catch((err) => {
@@ -105,12 +144,14 @@ const _download = (req: any, res: any, next: any) => {
   } else {
     title = req.headers["title"];
   }
-
+  let path = `${process.cwd()}/src/c++/temp/${title}.cpp`;
   promise.default
-    .download(`${process.cwd()}/src/c++/temp/${title}.cpp`, req.body)
+    .download(path, req.body)
     .then((result: any) => {
       if (result.includes("true")) {
-        res.download(`${process.cwd()}/src/c++/temp/${title}.cpp`);
+        res.download(path, ()=>{
+          if(fs.existsSync(path)) fs.unlink(path, (err)=>{console.log(err);})
+        });
       } else {
         res.send("internal error!");
       }
@@ -140,15 +181,18 @@ const _asm = async (req: any, res: any, next: any) => {
   };
 
   let command: string = `g++ -S -std=${headers.standar} ${process.cwd()}/src/c++/temp/${headers.title}_assembly.cpp -O${headers.O} -o ${process.cwd()}/src/c++/temp/${headers.title}_assembly`;
+  let path= `${process.cwd()}/src/c++/temp/${headers.title}_assembly`;
   await promise.default
     .assembly(
       command,
-      `${process.cwd()}/src/c++/temp/${headers.title}_assembly.cpp`,
+      path+".cpp",
       req.body
     )
     .then((result: any) => {
       if (result.includes("true")) {
-        res.download(`${process.cwd()}/src/c++/temp/${headers.title}_assembly`);
+        res.download(path,()=>{
+          if(fs.existsSync(path)) fs.unlink(path, (err)=>{console.log(err);})
+        });
       } else {
         res.send(result);
       }
