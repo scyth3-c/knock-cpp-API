@@ -5,8 +5,10 @@ import os from "os";
 import cors from 'cors'
 
 import * as routes from "./routes.json";
-//load database
 
+
+//load database
+//YOU SHOULD ADD .ENV FILE WITH    DATABASE=<MONGO URI>
  if (db) console.log('-> Conectado con el cluster "ABIS" database ');
 
 app.use(cors());
