@@ -8,7 +8,9 @@ OBJETOS = $(DIR_OBJ)/$(title).o \
 		  $(DIR_OBJ)/http.o \
 		  $(DIR_OBJ)/veridic.o
 
-CPPFLAGS = -std=c++20 -lcurl -I$(DIR_INC)  -pthread
+
+
+CPPFLAGS = -std=$(standar) -lcurl -I$(DIR_INC)  -pthread
 COMPILER = g++
 BUILD = $(COMPILER) $(OBJETOS)  $(CPPFLAGS) -o $(EJECUTABLE)
 DATA_ROUTE = ./src/c++/temp/$(title).txt
@@ -35,4 +37,4 @@ install:
 
 	apt-get install curl
 	apt-get install openssl -y
-	apt-get install libcurl4-openssl-dev -y	
+	apt-get install libcurl4-openssl-dev -y
