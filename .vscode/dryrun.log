@@ -1,0 +1,10 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/scythe/Documentos/GitHub/knock-cpp-API'
+mkdir -p ./src/c++/temp/_obj
+g++ -c -MD -std= -lcurl -I./src/c++/addons/headers  -pthread src/c++/addons/sources/http/http.cpp -o src/c++/temp/_obj/http.o
+mkdir -p ./src/c++/temp/_obj
+g++ -c -MD -std= -lcurl -I./src/c++/addons/headers  -pthread src/c++/addons/sources/http/veridic.cpp -o src/c++/temp/_obj/veridic.o
+make: Leaving directory '/home/scythe/Documentos/GitHub/knock-cpp-API'
+ 
+make: *** No rule to make target 'src/c++/temp/_obj/.o', needed by 'src/c++/temp/_bin/'.
+

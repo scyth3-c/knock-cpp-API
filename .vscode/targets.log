@@ -1,0 +1,371 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
+# GNU Make 4.2.1
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2016 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Fri Aug 26 14:26:17 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# makefile (from 'Makefile', line 3)
+DIR_MAIN = ./src/c++/addons/sources
+# environment
+DESKTOP_SESSION = plasma
+# default
+.SHELLFLAGS := -c
+# environment
+XDG_SESSION_CLASS = user
+# environment
+XDG_SESSION_TYPE = x11
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# makefile (from 'Makefile', line 13)
+CPPFLAGS = -std=$(standar) -lcurl -I$(DIR_INC)  -pthread
+# environment
+GTK_RC_FILES = /etc/gtk/gtkrc:/home/scythe/.gtkrc:/home/scythe/.config/gtkrc
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+XAUTHORITY = /home/scythe/.Xauthority
+# automatic
+@F = $(notdir $@)
+# default
+MAKE_VERSION := 4.2.1
+# makefile
+CURDIR := /home/scythe/Documentos/GitHub/knock-cpp-API
+# makefile
+SHELL = /bin/sh
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# environment
+_ = /usr/share/code/code
+# environment
+QT_AUTO_SCREEN_SCALE_FACTOR = 0
+# environment
+QT_EXCLUDE_GENERIC_BEARER = 1
+# environment
+XDG_CONFIG_DIRS = /home/scythe/.config/kdedefaults:/etc/xdg/xdg-plasma:/etc/xdg
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# makefile (from 'Makefile', line 1)
+EJECUTABLE = $(DIR_BIN)/$(title)
+# environment
+IM_CONFIG_PHASE = 1
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+MAKELEVEL := 0
+# environment
+MANDATORY_PATH = /usr/share/gconf/plasma.mandatory.path
+# environment
+XDG_DATA_DIRS = /usr/share/plasma:/home/scythe/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+# makefile (from 'Makefile', line 16)
+DATA_ROUTE = ./src/c++/temp/$(title).txt
+# environment
+XCURSOR_SIZE = 24
+# environment
+LC_NAME = es_CO.UTF-8
+# environment
+VSCODE_CWD = /home/scythe
+# environment
+PAM_KWALLET5_LOGIN = /run/user/1000/kwallet5.socket
+# environment
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session1
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+# environment
+MOZ_USE_XINPUT2 = 1
+# environment
+GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
+# environment
+XCURSOR_THEME = Colloid-cursors
+# environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
+SESSION_MANAGER = local/scythe-rigel:@/tmp/.ICE-unix/1151,unix/scythe-rigel:/tmp/.ICE-unix/1151
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+GTK2_RC_FILES = /etc/gtk-2.0/gtkrc:/home/scythe/.gtkrc-2.0:/home/scythe/.config/gtkrc-2.0
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
+# environment
+LS_COLORS = 
+# environment
+XDG_SESSION_DESKTOP = KDE
+# environment
+SSH_AUTH_SOCK = /tmp/ssh-eLq9FyKdxMKl/agent.1011
+# automatic
+%F = $(notdir $%)
+# environment
+DISPLAY = :0
+# makefile (from 'Makefile', line 7)
+OBJETOS = $(DIR_OBJ)/$(title).o $(DIR_OBJ)/http.o $(DIR_OBJ)/veridic.o
+# environment
+PWD = /home/scythe/Documentos/GitHub/knock-cpp-API
+# environment
+KDE_SESSION_VERSION = 5
+# default
+.LOADED := 
+# environment
+XDG_SEAT = seat0
+# environment
+SSH_AGENT_PID = 1055
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = KDE
+# makefile (from 'Makefile', line 2)
+DIR_INC = ./src/c++/addons/headers
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /home/scythe
+# environment
+VSCODE_CODE_CACHE_PATH = /home/scythe/.config/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
+# environment
+LOGNAME = scythe
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# automatic
++F = $(notdir $+)
+# environment
+KDE_FULL_SESSION = true
+# environment
+ZSH = /home/scythe/.oh-my-zsh
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+XDG_VTNR = 1
+# environment
+LC_TIME = es_CO.UTF-8
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+SHLVL = 0
+# environment
+XDG_SESSION_ID = 3
+# environment
+USER = scythe
+# environment
+LC_MONETARY = es_CO.UTF-8
+# makefile
+.DEFAULT_GOAL := src/c++/temp/_bin/
+# environment
+XDG_CURRENT_DESKTOP = KDE
+# environment
+LESS = -R
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+LC_TELEPHONE = es_CO.UTF-8
+# makefile (from 'Makefile', line 4)
+DIR_OBJ = ./src/c++/temp/$(title)_obj
+# default
+MAKE_COMMAND := make
+# environment
+KDE_APPLICATIONS_AS_SCOPE = 1
+# environment
+OLDPWD = /home/scythe
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# environment
+LANGUAGE = en_US:es
+# environment
+XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-6cfd7557-1.70.2-main.sock
+# makefile
+MAKEFLAGS = pqrR
+# environment
+MFLAGS = -pqrR
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# makefile (from 'Makefile', line 5)
+DIR_BIN = ./src/c++/temp/$(title)_bin
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+GDK_BACKEND = x11
+# environment
+LC_PAPER = es_CO.UTF-8
+# environment
+QT_ACCESSIBILITY = 1
+# environment
+DEFAULTS_PATH = /usr/share/gconf/plasma.default.path
+# makefile (from 'Makefile', line 14)
+COMPILER = g++
+# default
+MAKEFILES := 
+# environment
+LC_NUMERIC = es_CO.UTF-8
+# makefile (from 'Makefile', line 15)
+BUILD = $(COMPILER) $(OBJETOS)  $(CPPFLAGS) -o $(EJECUTABLE)
+# automatic
+<F = $(notdir $<)
+# environment
+LC_MEASUREMENT = es_CO.UTF-8
+# environment
+PAGER = less
+# environment
+LC_ALL = C
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# environment
+LC_IDENTIFICATION = es_CO.UTF-8
+# default
+.RECIPEPREFIX := 
+# environment
+LC_ADDRESS = es_CO.UTF-8
+# environment
+LANG = C
+# environment
+VSCODE_PID = 12550
+# environment
+KDE_SESSION_UID = 1000
+# variable set hash-table stats:
+# Load=118/1024=12%, Rehash=0, Collisions=9/161=6%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 66310, inode 4065880): 16 files, no impossibilities.
+# src/c++/addons/sources/**: could not be stat'd.
+# src/c++/addons/sources (device 66310, inode 4109440): 3 files, no impossibilities.
+# src/c++/temp/_obj: could not be stat'd.
+
+# 19 files, no impossibilities in 4 directories.
+
+# Implicit Rules
+
+src/c++/temp/_obj/%.o: src/c++/addons/sources/**/%.cpp
+#  recipe to execute (from 'Makefile', line 28):
+	@mkdir -p $(DIR_OBJ)
+	@$(COMPILER) -c -MD $(CPPFLAGS) $< -o $@
+
+# 1 implicit rules, 0 (0.0%) terminal.
+
+# Files
+
+# Not a target:
+src/c++/temp/_obj/http.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+ 
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+.PHONY: clean install
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/c++/temp/_obj/veridic.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-26 14:25:55.86701445
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+src/c++/temp/_obj/*.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+src/c++/temp/_bin/: src/c++/temp/_obj/.o src/c++/temp/_obj/http.o src/c++/temp/_obj/veridic.o
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 24):
+	@mkdir -p $(DIR_BIN)
+	@$(BUILD)
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 34):
+	@rm -r $(DIR_BIN) $(DIR_OBJ)
+
+# Not a target:
+src/c++/temp/_obj/.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+install:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 38):
+	apt-get install curl
+	apt-get install openssl -y
+	apt-get install libcurl4-openssl-dev -y
+
+# files hash-table stats:
+# Load=12/1024=1%, Rehash=0, Collisions=0/30=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 35 / storage = 470 B / avg = 13 B
+# current buf: size = 8162 B / used = 470 B / count = 35 / avg = 13 B
+
+# strcache performance: lookups = 48 / hit rate = 27%
+# hash-table stats:
+# Load=35/8192=0%, Rehash=0, Collisions=2/48=4%
+# Finished Make data base on Fri Aug 26 14:26:17 2022
+
+ 

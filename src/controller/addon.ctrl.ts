@@ -119,7 +119,7 @@ const _compile = async (req: any, res: any, next: any) => {
         fs.rmdir(`${process.cwd()}/src/c++/addons/sources/${headers.title}_main`,  (err)=>{ if(err) console.log(err);});
       }
       if(fs.existsSync( `${process.cwd()}/src/c++/temp/${headers.title}.txt`))   fs.unlink(`${process.cwd()}/src/c++/temp/${headers.title}.txt`, (err)=>{ if(err) console.log(err);});
-      res.send(result);
+      res.send(result.normalize());
     })
     .catch((err) => {
       res.send(err);
