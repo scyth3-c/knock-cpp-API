@@ -1,0 +1,139 @@
+---
+openapi: 3.0.0
+info:
+  title: API Documentation
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/BOHORDOPNG/knockapi/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /addon/compile:
+    post:
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "#include <iostream> \n int main() { \n std::cout << 123 << std::endl; \n return 0;   }"
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+  /addon/download:
+    post:
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "#include <iostream> \n int main() { \n std::cout << 123 << std::endl; \n return 0;   }"
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+  /addon/assembly:
+    post:
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: Successful response
+  /notes/new:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/notes_new_body'
+      responses:
+        "200":
+          description: Successful response
+  /notes/recollector:
+    get:
+      responses:
+        "200":
+          description: Successful response
+  /notes/items:
+    post:
+      responses:
+        "200":
+          description: Successful response
+  /notes/delete:
+    delete:
+      parameters:
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+  /notes/show:
+    get:
+      parameters:
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+  /notes/last:
+    get:
+      responses:
+        "200":
+          description: Successful response
+  /crypto/sha256:
+    get:
+      parameters:
+      - name: plain
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: dg
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+components:
+  schemas:
+    notes_new_body:
+      type: object
+      properties:
+        nombre:
+          type: string
+        conten:
+          type: string
+        autor:
+          type: string
