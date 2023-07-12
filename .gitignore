@@ -1,0 +1,5 @@
+# dependencies
+node_modules
+build
+src/c++/temp/hola_assembly.cpp
+.env

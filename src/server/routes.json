@@ -1,0 +1,33 @@
+{
+  "codespace": {
+    "route": "../routes/codespace.routes"
+  },
+  "crypto": {
+        "route": "../routes/crypto.routes"
+  },
+  "notes": {
+    "route": "../routes/knocknotes.routes"
+  },
+
+  "addons": {
+        "route": "../routes/addons.routes"
+  },
+  "openmid":{
+    "route": "../routes/openmid.routes"
+  },
+
+  "root": {
+      "route": "../routes/default.routes"
+  },
+
+  "allowOrigins": [
+    "https://kcompiler.com", 
+    "https://knockcompiler.netlify.app", 
+    "https://knockcompiler.web.app",
+    "https://lobster-app-tadp5.ondigitalocean.app",
+    "_mongodb._tcp.abiscluster.xg0vo.mongodb.net",
+    "mongodb.net",
+    "http://localhost:3001"
+  ]
+    
+}
