@@ -98,11 +98,13 @@ Creates a new note.
 
 Retrieves the notes.
 
-**Endpoint:** `GET /notes/recollector`
+**Endpoint:** `GET /notes/find`
 
 **Responses:**
 
 - 200: Successful response
+- 400: Bad request
+- 404: Not Found
 
 ### Add Items to a Note
 
@@ -122,11 +124,27 @@ Deletes a note by ID.
 
 **Parameters:**
 
-- `id`: [array of strings]
+- `id`: [strings]
 
 **Responses:**
 
 - 200: Successful response
+
+
+### Update a Note
+
+Update a note by ID.
+
+**Endpoint:** `PUT /notes/update`
+
+**Parameters:**
+
+- `id`: [strings]
+
+**Responses:**
+
+- 200: Successful response
+
 
 ### Retrieve a Note
 
@@ -170,6 +188,114 @@ Generates the SHA256 hash of the provided text.
 - 200: Successful response
 
 For more detailed information about the request/response formats and parameters, please refer to the [API Usage](api-usage.md) document.
+
+## Codespaces
+
+### Create a New codespaces
+
+Creates a new codespaces.
+
+**Endpoint:** `POST /codespace/new`
+
+**Request Body:**
+
+- Content Type: `application/json`
+- Schema:
+  - Properties:
+    - `code`: [string]
+    - `code`: [string]
+    - `time`: [string]
+
+**Responses:**
+
+- 200: Successful response
+- 404: Not Found
+
+
+### Retrieve Codespaces
+
+Retrieves the codespaces.
+
+**Endpoint:** `GET /codespace/find`
+
+**Responses:**
+
+- 200: Successful response
+- 404: Not Found
+
+### Delete a Codespaces
+
+Deletes a codespace by ID.
+
+**Endpoint:** `DELETE /codespace/delete`
+
+**Parameters:**
+
+- `id`: [string]
+
+**Responses:**
+- 200: Successful response
+- 404: Not Found
+
+
+### Retrieve a Codespaces
+
+Retrieves a codespace by ID.
+
+**Endpoint:** `GET /codespace/findone`
+
+**Parameters:**
+
+- `id`: [strings]
+
+**Responses:**
+
+- 200: Successful response
+-- 404: Not Found
+
+
+### Update a Codespaces
+
+Update a codespace by ID.
+
+**Endpoint:** `PUT /codespace/update`
+
+**Parameters:**
+
+- `id`: [strings]
+
+**Responses:**
+
+- 200: Successful response
+- 404: Not Found
+
+
+### Retrieve a sys
+
+Retrieves the exceptions.
+
+**Endpoint:** `GET /sys/exceptions`
+
+**Parameters:**
+
+**Responses:**
+
+- 200: Successful response
+- 404: Not Found
+
+
+### Retrieve the last a sys
+
+Retrieves the last exceptions.
+
+**Endpoint:** `GET /sys/exceptions/last`
+  
+**Parameters:**
+
+**Responses:**
+
+- 200: Successful response
+- 404: Not Found
 
 ## License
 

@@ -1,12 +1,13 @@
-FROM node:16
+FROM node:20-bullseye
 
 RUN mkdir knockapi
 WORKDIR /knockapi
 
-RUN apt-get update && apt-get install -y g++ make
-
 COPY package*.json ./
-RUN npm ci
+RUN  npm ci
+
+RUN apt-get update && apt-get install -y g++ make 
+
 COPY . .
 
 RUN make install

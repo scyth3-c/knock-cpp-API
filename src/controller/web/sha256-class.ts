@@ -1,9 +1,9 @@
 import crypto, { BinaryToTextEncoding } from 'crypto'
-//modulo de encryptacion SHA256  ~_~ 
+//módulo de encryption SHA256 ~_~
 /* The SHA256 class takes a string and returns a string. */
 class SHA256 {
     private plainText: any
-    private digest: BinaryToTextEncoding
+    private readonly digest: BinaryToTextEncoding
     public constructor(text:string, digest:BinaryToTextEncoding = 'hex') {
         this.plainText = text
         this.digest = digest
@@ -19,7 +19,7 @@ class SHA256 {
            return 'hex'
         }
     }
-};
+}
 
 export {SHA256}
 

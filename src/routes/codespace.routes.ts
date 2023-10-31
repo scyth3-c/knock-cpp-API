@@ -1,16 +1,14 @@
 import { Router } from "express";
-import midds from "../middleware/midd";
-import * as ctrls from "../controller/codespace.ctrl"
+import {middleware} from "../middleware/midd";
+import {codespace} from "../controller/web/codespace.ctrl"
 
 const app = Router();
 
-/* The code is defining different routes for the Express router `app` and associating each route with a
-specific controller function. */
-
-app.get("/", ctrls._default );
-app.post("/new", midds.noEmptyCodeSpace, ctrls._new);
-app.get("/extract", midds.noID, ctrls._extract)
-app.delete("/delete", midds.noID, ctrls._delete)
-app.put("/update", midds.noID, midds.noEmptyCodeSpace, ctrls._update)
+app.get("/", codespace._default );
+app.post("/new", middleware.noEmptyCodeSpace, codespace._new);
+app.get("/findone", middleware.noID, codespace._findone)
+app.delete("/delete", middleware.noID, codespace._delete)
+app.put("/update", middleware.noID, middleware.noEmptyCodeSpace, codespace._update)
+app.get("/find", codespace._find)
 
 module.exports = app;

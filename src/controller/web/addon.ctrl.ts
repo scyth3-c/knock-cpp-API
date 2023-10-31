@@ -1,70 +1,50 @@
 import fs from "fs";
 import { Request, Response} from "express";
-
 import * as promise from "./promises/addons";
+import { v4 as uuidv4 } from 'uuid'
 
-/* The `commandeable` interface is defining the structure of an object that represents a command that
-can be executed. It has the following properties: */
+
 interface commandeable {
   body:string,
   command: string,
-  name:string
+  name:string,
   useable:boolean,
   addons: {
     curl: boolean
+  },
+  data: {
+    body: string,
+    name: string
   }
   bot: boolean,
-  data: DataQuery,
   optional: {
      extract: string,
      data: string
   }
-};
-
-/* The `DataQuery` interface is defining the structure of an object that represents a data query. It
-has two properties: `body` and `name`, both of which are of type string. This interface is used to
-define the structure of the `data` property in the `commandeable` interface. */
-interface DataQuery {
-  body:string,
-  name:string,
-};
+}
 
 
-/* An interface that is used to create a type for the headers object. */
 interface otherHeaders {
     title:string,
     standar:string,
     O: string,
     flags:string,
     bot: boolean
-};
+}
 
-const _default = (req: Request, res: Response) => {
+const _default = (_req: Request, res: Response) => {
   res.json({ ruta: "/addons", endpoints: ['/assembly', '/download', '/compile'], info: "knock-api " });
 };
 
-
-
-/**
- * The above function is a TypeScript code snippet that compiles and executes C++ code based on the
- * provided headers and flags.
- * @param {Request} req - The `req` parameter is an object representing the HTTP request received by
- * the server. It contains information such as the request headers, body, and URL.
- * @param {Response} res - The `res` parameter is the response object that is used to send the response
- * back to the client. It is an instance of the `Response` class.
- */
-
 const _compile = async (req: Request, res: Response) => {
 
-
   let headers:otherHeaders = {
-    title: req?.headers["title"] as string || (Math.floor(Math.random() * (89894 - 10)) + 10).toString(),
+    title: uuidv4() || req?.headers["title"] as string,
     standar: req?.headers["standar"] as string || "c++17",
     O: req?.headers["o"] as string || "1",
     flags: req?.headers["flags"] as string || "",
-    bot: req?.headers["bot"] ? true : false
+    bot: !!req?.headers["bot"]
   };
-
 
     let flag_data:string = req?.headers["data"] as string;
     let curl:string = req?.headers["curl"] as string;
@@ -96,9 +76,9 @@ const _compile = async (req: Request, res: Response) => {
         body: req.body,
         command: _getCommand(),
         name: `${process.cwd()}/src/c++/temp/${headers.title}.cpp`,
-        useable: flag_data === undefined ? false : true,
+        useable: flag_data !== undefined,
         addons: {
-          curl: curl != "on" ? false : true
+          curl: curl == "on"
         },
         bot: headers.bot,
         data: {
@@ -131,35 +111,17 @@ const _compile = async (req: Request, res: Response) => {
     });
 };
 
-
-
-/**
- * The above function is a TypeScript function that handles downloading a file based on the request
- * headers and body.
- * @param {Request} req - The `req` parameter is an object that represents the HTTP request made by the
- * client. It contains information such as the request headers, request body, request method, and
- * request URL. In this code snippet, it is used to access the request headers and request body.
- * @param {Response} res - The "res" parameter is an instance of the Response object in Express.js. It
- * represents the HTTP response that will be sent back to the client.
- */
-
-
 const _download = (req: Request, res: Response) => {
 
-  let title: string;
-  if (req.headers["title"] === undefined) {
-    let auc: number = Math.floor(Math.random() * (89894 - 10)) + 10;
-    title = auc.toString();
-  } else {
-    title = req.headers["title"] as string;
-  }
+  let title: string = uuidv4() || req?.headers["title"] as string;
+
   let path = `${process.cwd()}/src/c++/temp/${title}.cpp`;
   promise.default
     .download(path, req.body)
     .then((result: any) => {
       if (result.includes("true")) {
         res.download(path, ()=>{
-          if(fs.existsSync(path)) fs.unlink(path, (err)=>{console.log(err);})
+          if(fs.existsSync(path)) fs.unlink(path, ()=>{})
         });
       } else {
         res.send("internal error!");
@@ -168,25 +130,10 @@ const _download = (req: Request, res: Response) => {
 };
 
 
-/**
- * The above function is an asynchronous function that compiles C++ code to assembly language and
- * either sends the assembly file as a download or sends an error message.
- * @param {Request} req - The `req` parameter is an object that represents the HTTP request made by the
- * client. It contains information such as the request headers, request body, request method, and
- * request URL.
- * @param {Response} res - The `res` parameter is the response object that is used to send the response
- * back to the client. It contains methods and properties that allow you to control the response, such
- * as `res.send()` to send a response body, `res.download()` to send a file as a response, and `
- * @param {any} next - The `next` parameter in the code snippet is a callback function that is used to
- * pass control to the next middleware function in the request-response cycle. It is typically used in
- * Express.js applications to chain multiple middleware functions together.
- */
-
-
-const _asm = async (req: Request, res: Response, next: any) => {
+const _asm = async (req: Request, res: Response) => {
  
   let headers:otherHeaders = {
-    title: req.headers["title"] as string || (Math.floor(Math.random() * (89894 - 10)) + 10).toString(),
+    title: uuidv4() || req?.headers["title"] as string,
     standar: req.headers["standar"] as string || "c++17",
     O: req.headers["o"]  as string|| "1",
     flags: req.headers["flags"] as string || "",
@@ -195,7 +142,7 @@ const _asm = async (req: Request, res: Response, next: any) => {
 
   let command: string = `g++ -S -std=${headers.standar} ${process.cwd()}/src/c++/temp/${headers.title}_assembly.cpp -O${headers.O} -o ${process.cwd()}/src/c++/temp/${headers.title}_assembly`;
   let path= `${process.cwd()}/src/c++/temp/${headers.title}_assembly`;
-  await promise.default
+    await promise.default
     .assembly(
       command,
       path+".cpp",
@@ -204,17 +151,16 @@ const _asm = async (req: Request, res: Response, next: any) => {
     .then((result: any) => {
       if (result.includes("true")) {
         res.download(path,()=>{
-          if(fs.existsSync(path)) fs.unlink(path, (err)=>{console.log(err);})
+          if(fs.existsSync(path)) fs.unlink(path, ()=>{})
         });
       } else {
         res.send(result);
       }
     })
-    .catch((err) => {
-      res.send("error");
+    .catch((e:any) => {
+      res.send(e);
     });
 };
-
 
 
 export { _compile, _default, _download, _asm};
