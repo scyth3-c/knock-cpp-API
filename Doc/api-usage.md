@@ -1,4 +1,4 @@
-# API Usage
+# API Usage Examples
 
 This document provides detailed examples of how to use the API endpoints for various functionalities.
 
@@ -140,7 +140,7 @@ Example:
 
 ```javascript
 Copy code
-await axios.get(`${API_BASE_URL}/notes/recollector`);
+await axios.get(`${API_BASE_URL}/notes/find`);
 ```
 
 Add Items to a Note

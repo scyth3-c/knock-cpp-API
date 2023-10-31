@@ -1,139 +1,300 @@
----
 openapi: 3.0.0
 info:
-  title: API Documentation
+  title: API Reference
+  description: Detailed information about the API endpoints, request/response formats, and parameters.
   version: 1.0.0
+# Definición de la URL base
 servers:
-- url: https://virtserver.swaggerhub.com/BOHORDOPNG/knockapi/1.0.0
-  description: SwaggerHub API Auto Mocking
+  - url: https://api.kcompiler.com/api/v2
+
 paths:
   /addon/compile:
     post:
+      summary: Compile Source Code
       requestBody:
+        required: true
         content:
           text/plain:
             schema:
               type: string
-              example: "#include <iostream> \n int main() { \n std::cout << 123 << std::endl; \n return 0;   }"
       responses:
-        "200":
+        '200':
           description: Successful response
-        "400":
-          description: Bad Request
-        "500":
-          description: Internal Server Error
+      parameters:
+        - name: title
+          in: header
+          schema:
+            type: string
+        - name: standar
+          in: header
+          schema:
+            type: string
+            enum: [c2a, c++11, c++14, c++17]
+        - name: o
+          in: header
+          schema:
+            type: string
+            enum: [1, 2, 3]
+        - name: flags
+          in: header
+          schema:
+            type: string
+        - name: data
+          in: header
+          schema:
+            type: string
+        - name: bot
+          in: header
+          schema:
+            type: string
+            enum: [1]
+        - name: curl
+          in: header
+          schema:
+            type: string
+            enum: ["on", "off"]
+
   /addon/download:
     post:
+      summary: Download Source Code
       requestBody:
+        required: true
         content:
           text/plain:
             schema:
               type: string
-              example: "#include <iostream> \n int main() { \n std::cout << 123 << std::endl; \n return 0;   }"
       responses:
-        "200":
+        '200':
           description: Successful response
-        "400":
-          description: Bad Request
-        "500":
-          description: Internal Server Error
+      parameters:
+        - name: title
+          in: header
+          schema:
+            type: string
+
   /addon/assembly:
     post:
+      summary: Generate Assembly Code
       requestBody:
+        required: true
         content:
           text/plain:
             schema:
               type: string
       responses:
-        "200":
+        '200':
           description: Successful response
+      parameters:
+        - name: title
+          in: header
+          schema:
+            type: string
+        - name: standar
+          in: header
+          schema:
+            type: string
+            enum: [2a, 11, 14, 17]
+        - name: o
+          in: header
+          schema:
+            type: string
+            enum: [1, 2, 3]
+        - name: flags
+          in: header
+          schema:
+            type: string
+
   /notes/new:
     post:
+      summary: Create a New Note
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/notes_new_body'
+              type: object
+              properties:
+                nombre:
+                  type: string
+                conten:
+                  type: string
+                autor:
+                  type: string
       responses:
-        "200":
+        '200':
           description: Successful response
-  /notes/recollector:
+
+  /notes/find:
     get:
+      summary: Retrieve Notes
       responses:
-        "200":
+        '200':
           description: Successful response
+        '400':
+          description: Bad request
+        '404':
+          description: Not Found
+
   /notes/items:
     post:
+      summary: Add Items to a Note
       responses:
-        "200":
+        '200':
           description: Successful response
+
   /notes/delete:
     delete:
+      summary: Delete a Note
       parameters:
-      - name: id
-        in: query
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
+        - name: id
+          in: query
+          schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Successful response
+
+  /notes/update:
+    put:
+      summary: Update a Note
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+
   /notes/show:
     get:
+      summary: Retrieve a Note
       parameters:
-      - name: id
-        in: query
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
+        - name: id
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
       responses:
-        "200":
+        '200':
           description: Successful response
+
   /notes/last:
     get:
+      summary: Retrieve the Last Note
       responses:
-        "200":
+        '200':
           description: Successful response
+
   /crypto/sha256:
     get:
+      summary: Generate SHA256 Hash
       parameters:
-      - name: plain
-        in: query
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: dg
-        in: query
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
+        - name: plain
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: dg
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [hex, base64]
+      responses:
+        '200':
+          description: Successful response
+
+  /codespace/new:
+    post:
+      summary: Create a New Codespace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                time:
+                  type: string
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not Found
+
+  /codespace/find:
+    get:
+      summary: Retrieve Codespaces
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not Found
+
+  /codespace/delete:
+    delete:
+      summary: Delete a Codespace
+      parameters:
+        - name: id
+          in: query
+          schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Successful response
-components:
-  schemas:
-    notes_new_body:
-      type: object
-      properties:
-        nombre:
-          type: string
-        conten:
-          type: string
-        autor:
-          type: string
+        '404':
+          description: Not Found
+
+  /codespace/findone:
+    get:
+      summary: Retrieve a Codespace
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not Found
+
+  /codespace/update:
+    put:
+      summary: Update a Codespace
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not Found
+
+  /sys/exceptions:
+    get:
+      summary: Retrieve the exceptions
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not Found
+
+  /sys/exceptions/last:
+    get:
+      summary: Retrieve the last exceptions
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not Found

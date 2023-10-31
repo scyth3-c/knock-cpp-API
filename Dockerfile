@@ -1,12 +1,19 @@
-FROM node:16
+FROM node:20-bullseye
 
 RUN mkdir knockapi
 WORKDIR /knockapi
 
-RUN apt-get update && apt-get install -y g++ make
+COPY boty/ ./boty
+COPY . .
 
-COPY package*.json ./
-RUN npm ci
+RUN apt-get update && apt-get install -y g++ make 
+
+RUN cd ./boty git pull
+RUN cd ./boty \
+    && npm i \
+    && cd .. \
+    && npm i
+
 COPY . .
 
 RUN make install

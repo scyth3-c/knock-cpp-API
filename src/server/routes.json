@@ -6,7 +6,7 @@
         "route": "../routes/crypto.routes"
   },
   "notes": {
-    "route": "../routes/knocknotes.routes"
+    "route": "../routes/notes.routes"
   },
 
   "addons": {
@@ -15,11 +15,16 @@
   "openmid":{
     "route": "../routes/openmid.routes"
   },
+  "options": {
+    "route": "../routes/options.routes"
+  },
+  "sys": {
+    "route": "../routes/sys.routes"
+  },
 
   "root": {
       "route": "../routes/default.routes"
   },
-
   "allowOrigins": [
     "https://kcompiler.com", 
     "https://knockcompiler.netlify.app", 

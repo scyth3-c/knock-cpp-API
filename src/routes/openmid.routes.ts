@@ -1,15 +1,16 @@
 import { Router } from 'express'
-import * as ctrls from '../controller/openmid.ctrl';
-import midds from '../middleware/midd'
+import {openmid} from '../controller/web/openmid.ctrl';
+import {middleware} from '../middleware/midd'
 let router : Router = Router();
 
 
 /* The code block you provided is defining different routes for a router object in an Express
 application. */
 
-router.get('/search', midds.noVloc ,ctrls._search)
-router.post('/send', midds.NewOpenmoid,ctrls._send)
-router.delete('/delete',midds.noVloc,  ctrls._delete)
-router.put('/update',midds.noVloc, midds.NewOpenmoid, ctrls._update)
+router.get('/search', middleware.noVloc ,openmid._search);
+router.post('/send', middleware.NewOpenmoid,openmid._send);
+router.delete('/delete',middleware.noVloc,  openmid._delete);
+router.put('/update',middleware.noVloc, middleware.NewOpenmoid, openmid._update);
+router.get("/find", openmid._find);
 
 module.exports = router

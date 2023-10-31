@@ -5,6 +5,7 @@ env.config();
 
 db.Promise = global.Promise;
 
+db.set("strictQuery", false)
 db.connect(process.env.DB as string, { ignoreUndefined: true })
   .then((res:any) => {
     if (res) console.log("-> conectado a la base de datos");

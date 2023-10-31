@@ -6,4 +6,4 @@
 
 */
 #include <iostream>  
-int main() { std::cout<<"<tasrt>detective<tasty/>"; return 0;}
+int main() { std::cout<<"<tasty>detective<tasty/>"; return 0;}
